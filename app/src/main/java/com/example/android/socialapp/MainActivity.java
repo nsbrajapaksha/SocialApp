@@ -1,5 +1,6 @@
 package com.example.android.socialapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,13 +15,16 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mDatabase;
 
     FirebaseRecyclerAdapter<Social, SocialViewHolder> FBRA;
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +69,24 @@ public class MainActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull SocialViewHolder holder, int position, @NonNull Social model) {
                 holder.setDesc(model.getDesc());
                 holder.setTitle(model.getTitle());
+                holder.setImage(getApplicationContext(), model.getImage());
             }
         };
         mSocialList.setAdapter(FBRA);
+
+        /*mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    Intent loginIntent = new Intent(MainActivity.this, RegisterActivity.class);
+                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(loginIntent);
+
+                }
+            }
+        };
+        mAuth.addAuthStateListener(mAuthListener);*/
 
     }
 
@@ -105,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
         public void setDesc(String desc) {
             TextView post_desc = (TextView) itemView.findViewById(R.id.text_desc);
             post_desc.setText(desc);
+        }
+
+        public void setImage(Context context, String image) {
+            ImageView post_image = (ImageView) itemView.findViewById(R.id.post_image);
+            Picasso.with(context).load(image).into(post_image);
         }
 
     }
