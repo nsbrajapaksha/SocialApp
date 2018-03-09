@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         mSocialList = (RecyclerView) findViewById(R.id.social_list);
         mSocialList.setHasFixedSize(true);
         mSocialList.setLayoutManager(new LinearLayoutManager(this));
@@ -51,6 +52,26 @@ public class MainActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mDatabase.getReference().child("SocialApp");
 
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    Intent loginIntent = new Intent(MainActivity.this, RegisterActivity.class);
+                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(loginIntent);
+
+                }
+            }
+        };
+        mAuth.addAuthStateListener(mAuthListener);
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         Query postQuery = mDatabaseReference.orderByKey();
         FirebaseRecyclerOptions<Social> options = new FirebaseRecyclerOptions.Builder<Social>()
                 .setQuery(postQuery, Social.class)
@@ -73,29 +94,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mSocialList.setAdapter(FBRA);
-
-        mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() == null) {
-                    Intent loginIntent = new Intent(MainActivity.this, RegisterActivity.class);
-                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(loginIntent);
-
-                }
-            }
-        };
-        mAuth.addAuthStateListener(mAuthListener);
-
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         FBRA.startListening();
-        mSocialList.setAdapter(FBRA);
         mAuth.addAuthStateListener(mAuthListener);
 
     }
@@ -104,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         FBRA.stopListening();
+        if (mAuth != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     @Override

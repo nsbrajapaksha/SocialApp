@@ -30,12 +30,12 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         nameField = (EditText) findViewById(R.id.nameField);
-        passField = (EditText) findViewById(R.id.passwordField);
+        passField = (EditText) findViewById(R.id.passField);
         emailField = (EditText) findViewById(R.id.emailField);
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mDatabase.getReference().child("Users");
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+        //mDatabaseReference = mDatabase.getReference().child("Users");
 
     }
 
