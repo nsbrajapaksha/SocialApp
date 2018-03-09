@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
                         current_user_db.child("Name").setValue(name);
                         current_user_db.child("image").setValue("default");
 
-                        Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                        Intent mainIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(mainIntent);
                     }
@@ -62,6 +62,11 @@ public class RegisterActivity extends AppCompatActivity {
             });
         }
 
+    }
+
+    public void returnLoginScreenButtonClicked(View view) {
+        Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(loginIntent);
     }
 }
 
