@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         };
         mSocialList.setAdapter(FBRA);
 
-        /*mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        mAuth.addAuthStateListener(mAuthListener);*/
+        mAuth.addAuthStateListener(mAuthListener);
 
     }
 
@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FBRA.startListening();
+        mSocialList.setAdapter(FBRA);
+        mAuth.addAuthStateListener(mAuthListener);
 
     }
 
@@ -148,9 +150,12 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        if (id == R.id.addIcon) {
+        else if (id == R.id.addIcon) {
             Intent intent = new Intent(MainActivity.this, PostActivity.class);
             startActivity(intent);
+        }
+        else if (id == R.id.logOut) {
+            mAuth.signOut();
         }
 
         return super.onOptionsItemSelected(item);
