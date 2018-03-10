@@ -46,7 +46,7 @@ public class Social {
         this.mImage = image;
     }
 
-    public void setmUsername(String username) {
+    public void setUsername(String username) {
         this.mUsername = username;
     }
 }
