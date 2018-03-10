@@ -5,16 +5,17 @@ package com.example.android.socialapp;
  */
 
 public class Social {
-    private String mTitle, mDesc, mImage;
+    private String mTitle, mDesc, mImage, mUsername;
 
     public Social() { //empty constructor needed for firebase
 
     }
 
-    public Social(String title, String desc, String image) {
+    public Social(String title, String desc, String image, String username) {
         this.mTitle = title;
         this.mDesc = desc;
         this.mImage = image;
+        this.mUsername = username;
     }
 
     public String getTitle() {
@@ -29,6 +30,10 @@ public class Social {
         return mImage;
     }
 
+    public String getUsername() {
+        return mUsername;
+    }
+
     public void setTitle(String title) {
         this.mTitle = title;
     }
@@ -39,5 +44,9 @@ public class Social {
 
     public void setImage(String image) {
         this.mImage = image;
+    }
+
+    public void setmUsername(String username) {
+        this.mUsername = username;
     }
 }

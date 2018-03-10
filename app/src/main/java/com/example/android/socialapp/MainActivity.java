@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 holder.setDesc(model.getDesc());
                 holder.setTitle(model.getTitle());
                 holder.setImage(getApplicationContext(), model.getImage());
+                holder.setUsername(model.getUsername());
             }
         };
         mSocialList.setAdapter(FBRA);
@@ -136,6 +137,12 @@ public class MainActivity extends AppCompatActivity {
         public void setImage(Context context, String image) {
             ImageView post_image = (ImageView) itemView.findViewById(R.id.post_image);
             Picasso.with(context).load(image).into(post_image);
+        }
+
+        public void setUsername(String username) {
+            TextView postUsername = (TextView) itemView.findViewById(R.id.textUsername);
+            postUsername.setText(username);
+
         }
 
     }

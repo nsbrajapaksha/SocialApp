@@ -53,8 +53,8 @@ public class PostActivity extends AppCompatActivity {
         databaseReference = database.getReference().child("SocialApp");
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
         mCurrentUser = mAuth.getCurrentUser();
+        mDatabaseUsers = database.getReference().child("Users").child(mCurrentUser.getUid());
 
 
     }
