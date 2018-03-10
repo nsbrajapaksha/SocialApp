@@ -7,7 +7,7 @@ package com.example.android.socialapp;
 public class Social {
     private String mTitle, mDesc, mImage;
 
-    public Social() {
+    public Social() { //empty constructor needed for firebase
 
     }
 
