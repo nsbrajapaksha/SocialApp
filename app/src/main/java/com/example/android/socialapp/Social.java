@@ -8,7 +8,6 @@ public class Social {
     private String mTitle, mDesc, mImage, mUsername;
 
     public Social() { //empty constructor needed for firebase
-
     }
 
     public Social(String title, String desc, String image, String username) {
