@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseReference;
 
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
 
         loginEmail = (EditText) findViewById(R.id.login_email);
         loginPass = (EditText) findViewById(R.id.login_pass);
+        progressBar = (ProgressBar) findViewById(R.id.login_progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -42,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         String pass = loginPass.getText().toString().trim();
 
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass)) {
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.animate();
             mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -59,9 +66,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild(user_id)) {
+                    progressBar.setVisibility(View.INVISIBLE);
                     Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
+                } else {
+
                 }
             }
 

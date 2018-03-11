@@ -40,4 +40,11 @@
         android:onClick="loginButtonClicked"
         android:text="Login" />
 
+    <ProgressBar
+        android:layout_marginTop="30dp"
+        android:id="@+id/login_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

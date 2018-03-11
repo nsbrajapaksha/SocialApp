@@ -88,7 +88,7 @@ public class SetupActivity extends AppCompatActivity {
                     mDatabaseusers.child(user_id).child("image").setValue(downloadUrl);
                 }
             });
-            Intent mainIntent = new Intent(SetupActivity.this, LoginActivity.class);
+            Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(mainIntent);
 

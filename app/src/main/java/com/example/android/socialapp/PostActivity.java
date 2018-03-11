@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,6 +41,8 @@ public class PostActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseUsers;
     private FirebaseUser mCurrentUser;
 
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,8 @@ public class PostActivity extends AppCompatActivity {
 
         editName = (EditText) findViewById(R.id.editName);
         editDesc = (EditText) findViewById(R.id.editDesc);
+        progressBar = (ProgressBar) findViewById(R.id.post_progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         database = FirebaseDatabase.getInstance();
@@ -64,11 +69,14 @@ public class PostActivity extends AppCompatActivity {
         final String descValue = editDesc.getText().toString().trim();
 
         if (!TextUtils.isEmpty(titleValue) && !TextUtils.isEmpty(descValue)) {
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.animate();
             StorageReference filepath = storageReference.child("PostImage").child(uri.getLastPathSegment());
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     final Uri downloadurl = taskSnapshot.getDownloadUrl();
+                    progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(PostActivity.this, "Upload Complete!", Toast.LENGTH_LONG).show();
                     final DatabaseReference newPost = databaseReference.push();
 

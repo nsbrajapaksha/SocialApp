@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDatabaseReference;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,8 @@ public class RegisterActivity extends AppCompatActivity {
         nameField = (EditText) findViewById(R.id.nameField);
         passField = (EditText) findViewById(R.id.passField);
         emailField = (EditText) findViewById(R.id.emailField);
+        progressBar = (ProgressBar) findViewById(R.id.register_progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -49,17 +54,23 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        progressBar.animate();
                         String user_id = mAuth.getCurrentUser().getUid();
                         DatabaseReference current_user_db = mDatabaseReference.child(user_id);
                         current_user_db.child("Name").setValue(name);
                         current_user_db.child("image").setValue("default");
 
                         Intent mainIntent = new Intent(RegisterActivity.this, SetupActivity.class);
-                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        progressBar.setVisibility(View.INVISIBLE);
                         startActivity(mainIntent);
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Fill the text fields correctly", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
+        } else {
+            Toast.makeText(this, "Fill all the text fields to register", Toast.LENGTH_SHORT).show();
         }
 
     }
