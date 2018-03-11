@@ -16,11 +16,11 @@
             android:id="@+id/post_image"/>
 
         <TextView
+            android:id="@+id/text_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Post Title"
             android:layout_margin="5dp"
-            android:id="@+id/text_title"/>
+            android:text="Post Title" />
 
         <TextView
             android:layout_width="match_parent"
@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="username"
+            android:text="Username"
             android:layout_margin="5dp"
             android:id="@+id/textUsername"/>
 

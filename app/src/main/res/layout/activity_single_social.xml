@@ -7,37 +7,38 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/appBackground"
-    tools:context="com.example.android.socialapp.LoginActivity">
+    tools:context="com.example.android.socialapp.SingleSocialActivity">
 
-    <EditText
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/singleImageView"/>
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/login_email"
-        android:hint="Enter email"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:background="@drawable/editshape"
-        android:padding="10dp"
-        android:layout_marginTop="10dp"/>
+        android:text="post title"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:id="@+id/singleTitle"/>
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/login_pass"
-        android:hint="Enter password"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:background="@drawable/editshape"
-        android:padding="10dp"
-        android:layout_marginTop="10dp"/>
+        android:text="post description"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:id="@+id/singleDesc"/>
 
     <Button
-        style="@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/singleDeleteButton"
+        style="@android:style/Widget.Button.Inset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:onClick="loginButtonClicked"
-        android:text="Login" />
+        android:onClick="deleteButtonClicked"
+        android:text="delete post"
+        android:textAllCaps="false"/>
 
 </LinearLayout>

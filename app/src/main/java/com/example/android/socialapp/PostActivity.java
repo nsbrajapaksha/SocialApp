@@ -85,6 +85,7 @@ public class PostActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Intent mainActivityIntent = new Intent(PostActivity.this, MainActivity.class);
+                                        mainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(mainActivityIntent);
 
                                     }

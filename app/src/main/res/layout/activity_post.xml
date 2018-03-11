@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/appBackground"
     tools:context="com.example.android.socialapp.PostActivity">
 
     <ImageButton
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:background="@drawable/addimage"
-        android:layout_marginLeft="70dp"
+        android:layout_gravity="center_horizontal"
         android:onClick="imageButtonClicked"
         android:id="@+id/imageButton"/>
 
@@ -22,26 +24,24 @@
         android:hint="Enter name"
         android:background="@drawable/editshape"
         android:padding="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter description"
         android:padding="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/editshape"
         android:id="@+id/editDesc"/>
 
     <Button
-        android:layout_marginTop="50dp"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:onClick="submitButtonClicked"
         android:text="Submit"
-        android:onClick="submitButtonClicked"/>
+        android:textAllCaps="false"/>
 
 </LinearLayout>

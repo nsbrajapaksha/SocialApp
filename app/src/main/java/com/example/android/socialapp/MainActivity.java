@@ -88,10 +88,23 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull SocialViewHolder holder, int position, @NonNull Social model) {
+
+                final String post_key = getRef(position).getKey().toString();
+
                 holder.setDesc(model.getDesc());
                 holder.setTitle(model.getTitle());
                 holder.setImage(getApplicationContext(), model.getImage());
-                holder.setUsername(model.getUsername());
+                holder.setUsername("Shared by " + model.getUsername());
+
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent singleSocialActivity = new Intent(MainActivity.this, SingleSocialActivity.class);
+                        singleSocialActivity.putExtra("PostId", post_key);
+                        startActivity(singleSocialActivity);
+
+                    }
+                });
             }
         };
         mSocialList.setAdapter(FBRA);
@@ -119,28 +132,30 @@ public class MainActivity extends AppCompatActivity {
 
     public static class SocialViewHolder extends RecyclerView.ViewHolder {
 
+        View mView;
+
         public SocialViewHolder(View itemView) {
             super(itemView);
-            View mView = itemView;
+            mView = itemView;
         }
 
         public void setTitle(String title) {
-            TextView post_title = (TextView) itemView.findViewById(R.id.text_title);
+            TextView post_title = (TextView) mView.findViewById(R.id.text_title);
             post_title.setText(title);
         }
 
         public void setDesc(String desc) {
-            TextView post_desc = (TextView) itemView.findViewById(R.id.text_desc);
+            TextView post_desc = (TextView) mView.findViewById(R.id.text_desc);
             post_desc.setText(desc);
         }
 
         public void setImage(Context context, String image) {
-            ImageView post_image = (ImageView) itemView.findViewById(R.id.post_image);
+            ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
             Picasso.with(context).load(image).into(post_image);
         }
 
         public void setUsername(String username) {
-            TextView postUsername = (TextView) itemView.findViewById(R.id.textUsername);
+            TextView postUsername = (TextView) mView.findViewById(R.id.textUsername);
             postUsername.setText(username);
 
         }

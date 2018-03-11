@@ -5,25 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/appBackground"
     tools:context="com.example.android.socialapp.SetupActivity">
 
     <ImageButton
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginLeft="115dp"
+        android:layout_gravity="center_horizontal"
         android:onClick="profileImageButtonClicked"
-        android:id="@+id/setupImageButton"/>
+        android:id="@+id/setupImageButton"
+        android:background="@drawable/profileimage"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/displayName"
-        android:hint="Enter username"/>
+        android:hint="Enter username"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/editshape"
+        android:padding="10dp"/>
 
     <Button
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="done"
-        android:onClick="doneButtonClicked"/>
+        android:layout_marginTop="20dp"
+        android:onClick="doneButtonClicked"
+        android:text="done" />
 
 </LinearLayout>
