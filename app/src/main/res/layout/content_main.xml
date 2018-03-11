@@ -9,9 +9,10 @@
     tools:showIn="@layout/activity_main">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/social_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/social_list">
+        android:background="@color/appBackground">
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
