@@ -115,12 +115,12 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mSocialList.setAdapter(FBRA);
+        FBRA.startListening();
         skeletonScreen = Skeleton.bind(mSocialList)
                 .duration(1000)
                 .adapter(FBRA)
                 .load(R.layout.layout_skeleton)
                 .show();
-        FBRA.startListening();
         mAuth.addAuthStateListener(mAuthListener);
         MyHandler myHandler = new MyHandler(this);
         myHandler.sendEmptyMessageDelayed(1, 3000);

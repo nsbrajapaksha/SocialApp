@@ -22,6 +22,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/displayName"
         android:hint="Enter username"
+        android:ems="10"
+        android:inputType="textPersonName"
         android:layout_marginTop="10dp"
         android:background="@drawable/editshape"
         android:padding="10dp"/>

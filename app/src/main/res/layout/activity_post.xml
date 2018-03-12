@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editName"
-        android:hint="Enter name"
+        android:hint="Enter title"
         android:background="@drawable/editshape"
         android:padding="10dp"
         android:layout_marginTop="20dp" />
@@ -31,6 +31,8 @@
         android:layout_height="wrap_content"
         android:hint="Enter description"
         android:padding="10dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
         android:layout_marginTop="10dp"
         android:background="@drawable/editshape"
         android:id="@+id/editDesc"/>
