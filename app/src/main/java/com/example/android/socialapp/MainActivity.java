@@ -204,8 +204,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void setImage(Context context, String image) {
-            ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
-            Picasso.with(context).load(image).resize(360, 200).into(post_image);
+            final ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
+            Picasso.with(context).load(image)
+                    .resize(360, 200)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.error_image)
+                    .into(post_image);
         }
 
         public void setUsername(String username) {
