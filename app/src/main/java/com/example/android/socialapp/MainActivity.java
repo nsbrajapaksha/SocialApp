@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +32,11 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.FadeInAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mSocialList;
@@ -45,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     SkeletonScreen skeletonScreen;
     private boolean animate;
 
+    AlphaInAnimationAdapter alphaInAnimationAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
         mSocialList = (RecyclerView) findViewById(R.id.social_list);
         mSocialList.setHasFixedSize(true);
         mSocialList.setLayoutManager(new LinearLayoutManager(this));
+
+        SlideInLeftAnimator animator = new SlideInLeftAnimator();
+        animator.setInterpolator(new OvershootInterpolator());
+        mSocialList.setItemAnimator(animator);
 
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mDatabase.getReference().child("SocialApp");
@@ -110,7 +122,9 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         };
-        mSocialList.setAdapter(FBRA);
+
+        alphaInAnimationAdapter = new AlphaInAnimationAdapter(FBRA);
+        mSocialList.setAdapter(new ScaleInAnimationAdapter(alphaInAnimationAdapter));
 
     }
 
@@ -118,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mSocialList.setAdapter(FBRA);
+        mSocialList.setAdapter(new ScaleInAnimationAdapter(alphaInAnimationAdapter));
         FBRA.startListening();
         if (animate) {
             skeletonScreen = Skeleton.bind(mSocialList)
