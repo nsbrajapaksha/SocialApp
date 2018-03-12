@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     SkeletonScreen skeletonScreen;
+    private boolean animate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        animate = true;
 
         mSocialList = (RecyclerView) findViewById(R.id.social_list);
         mSocialList.setHasFixedSize(true);
@@ -73,12 +75,6 @@ public class MainActivity extends AppCompatActivity {
         };
         mAuth.addAuthStateListener(mAuthListener);
 
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         Query postQuery = mDatabaseReference.orderByKey();
         FirebaseRecyclerOptions<Social> options = new FirebaseRecyclerOptions.Builder<Social>()
                 .setQuery(postQuery, Social.class)
@@ -115,15 +111,27 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mSocialList.setAdapter(FBRA);
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mSocialList.setAdapter(FBRA);
         FBRA.startListening();
-        skeletonScreen = Skeleton.bind(mSocialList)
-                .duration(1000)
-                .adapter(FBRA)
-                .load(R.layout.layout_skeleton)
-                .show();
+        if (animate) {
+            skeletonScreen = Skeleton.bind(mSocialList)
+                    .duration(1000)
+                    .adapter(FBRA)
+                    .load(R.layout.layout_skeleton)
+                    .show();
+            MyHandler myHandler = new MyHandler(this);
+            myHandler.sendEmptyMessageDelayed(1, 3000);
+            animate = false;
+        }
         mAuth.addAuthStateListener(mAuthListener);
-        MyHandler myHandler = new MyHandler(this);
-        myHandler.sendEmptyMessageDelayed(1, 3000);
+
 
     }
 
