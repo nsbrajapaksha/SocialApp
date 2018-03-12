@@ -3,6 +3,7 @@ package com.example.android.socialapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ethanhua.skeleton.Skeleton;
+import com.ethanhua.skeleton.SkeletonScreen;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
+
+import java.lang.ref.WeakReference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    SkeletonScreen skeletonScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,9 +115,32 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mSocialList.setAdapter(FBRA);
+        skeletonScreen = Skeleton.bind(mSocialList)
+                .duration(1000)
+                .adapter(FBRA)
+                .load(R.layout.layout_skeleton)
+                .show();
         FBRA.startListening();
         mAuth.addAuthStateListener(mAuthListener);
+        MyHandler myHandler = new MyHandler(this);
+        myHandler.sendEmptyMessageDelayed(1, 3000);
 
+    }
+
+    public static class MyHandler extends android.os.Handler {
+        private final WeakReference<MainActivity> activityWeakReference;
+
+        MyHandler(MainActivity activity) {
+            this.activityWeakReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (activityWeakReference.get() != null) {
+                activityWeakReference.get().skeletonScreen.hide();
+            }
+        }
     }
 
     @Override

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    tools:context="com.example.android.socialapp.MainActivity">
+    <View
+        android:id="@+id/img_banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/light_transparent" />
+
+    <View
+        android:id="@+id/text_title"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_transparent" />
+
+    <View
+        android:id="@+id/text_description"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_transparent" />
+
+    <View
+        android:id="@+id/text_username"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_transparent" />
+
+    <View
+        android:layout_marginTop="20dp"
+        android:id="@+id/img_banner2"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/light_transparent" />
+
+    <View
+        android:id="@+id/text_title2"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_transparent" />
+
+    <View
+        android:id="@+id/text_description2"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_transparent" />
+
+    <View
+        android:id="@+id/text_username2"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_transparent" />
+
+
+</LinearLayout>

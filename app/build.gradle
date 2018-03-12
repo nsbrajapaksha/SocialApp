@@ -34,6 +34,8 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:3.2.2'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.6.+'
+    implementation 'com.ethanhua:skeleton:1.1.0'
+    implementation 'io.supercharge:shimmerlayout:2.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
