@@ -2,6 +2,7 @@ package com.example.android.socialapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -29,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.lang.ref.WeakReference;
 
@@ -203,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
 
         public void setImage(Context context, String image) {
             ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
-            Picasso.with(context).load(image).into(post_image);
+            Picasso.with(context).load(image).resize(360, 200).into(post_image);
         }
 
         public void setUsername(String username) {
@@ -213,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
