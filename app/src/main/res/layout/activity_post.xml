@@ -10,8 +10,8 @@
     tools:context="com.example.android.socialapp.PostActivity">
 
     <ImageButton
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:background="@drawable/addimage"
         android:layout_gravity="center_horizontal"
         android:onClick="imageButtonClicked"
@@ -22,26 +22,38 @@
         android:layout_height="wrap_content"
         android:id="@+id/editName"
         android:hint="Enter title"
-        android:background="@drawable/editshape"
-        android:padding="10dp"
-        android:layout_marginTop="20dp" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter description"
-        android:padding="10dp"
         android:ems="10"
-        android:inputType="textMultiLine"
-        android:layout_marginTop="10dp"
+        android:inputType="textPersonName"
         android:background="@drawable/editshape"
-        android:id="@+id/editDesc"/>
+        android:padding="10dp" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:visibility="visible">
+
+        <EditText
+            android:id="@+id/editDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/editshape"
+            android:ems="10"
+            android:layout_gravity="center_vertical"
+            android:hint="Enter description"
+            android:inputType="textMultiLine"
+            android:padding="10dp" />
+
+    </ScrollView>
 
     <Button
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:onClick="submitButtonClicked"
         android:text="Submit"
         android:textAllCaps="false"/>
