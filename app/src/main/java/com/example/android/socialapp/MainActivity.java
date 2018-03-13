@@ -3,6 +3,8 @@ package com.example.android.socialapp;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -20,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
@@ -39,7 +42,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
 
     private RecyclerView mSocialList;
     private DatabaseReference mDatabaseReference;
@@ -95,8 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         FBRA = new FirebaseRecyclerAdapter<Social, SocialViewHolder>(
                 options) {
+            @NonNull
             @Override
-            public SocialViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            public SocialViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.social_row, parent, false);
 
@@ -146,6 +150,11 @@ public class MainActivity extends AppCompatActivity {
             myHandler.sendEmptyMessageDelayed(1, 3000);
             animate = false;
         }
+        /*if (!isNetworkAvailable(this)) {
+            Toast.makeText(this, "No internet access", Toast.LENGTH_LONG).show();
+        }*/
+        // Manually checking internet connection
+        checkConnection();
         mAuth.addAuthStateListener(mAuthListener);
 
 
@@ -240,5 +249,48 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /*public boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }*/
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+    /**
+     * Callback will be triggered when there is change in
+     * network connection
+     */
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
+    }
+
+    // Method to manually check connection status
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        showSnack(isConnected);
+    }
+
+    // Showing the status in Snackbar
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            message = "Good! Connected to Internet";
+            color = Color.WHITE;
+        } else {
+            message = "Sorry! Not connected to internet";
+            color = Color.RED;
+        }
+
+        Snackbar.make(findViewById(R.id.relativeLayout), message, Snackbar.LENGTH_LONG).show();
     }
 }
