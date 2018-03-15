@@ -42,7 +42,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
-public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
+public class MainActivity extends AppCompatActivity{
 
     private RecyclerView mSocialList;
     private DatabaseReference mDatabaseReference;
@@ -153,8 +153,9 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         /*if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "No internet access", Toast.LENGTH_LONG).show();
         }*/
+
         // Manually checking internet connection
-        checkConnection();
+        //checkConnection();
         mAuth.addAuthStateListener(mAuthListener);
 
 
@@ -256,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }*/
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
 
@@ -264,10 +265,10 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         MyApplication.getInstance().setConnectivityListener(this);
     }
 
-    /**
+    *//**
      * Callback will be triggered when there is change in
      * network connection
-     */
+     *//*
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
         showSnack(isConnected);
@@ -292,5 +293,5 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         }
 
         Snackbar.make(findViewById(R.id.relativeLayout), message, Snackbar.LENGTH_LONG).show();
-    }
+    }*/
 }
