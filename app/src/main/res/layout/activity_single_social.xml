@@ -9,10 +9,19 @@
     android:background="@color/appBackground"
     tools:context="com.example.android.socialapp.SingleSocialActivity">
 
-    <ImageView
+    <!-- <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:id="@+id/singleImageView"/>
+        android:id="@+id/singleImageView"/> -->
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/singleImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:placeholderImage="@drawable/placeholder"
+        app:failureImage="@drawable/error_image"
+        app:retryImage="@drawable/error_image"
+        app:actualImageScaleType="fitCenter"/>
 
     <TextView
         android:layout_width="match_parent"

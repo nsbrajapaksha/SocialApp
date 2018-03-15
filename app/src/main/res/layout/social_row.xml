@@ -11,18 +11,35 @@
         android:orientation="vertical"
         android:layout_margin="10dp">
 
-        <ImageView
+        <!-- <ImageView
             android:padding="1dp"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:id="@+id/post_image"
-            android:background="@drawable/border_imageview"/>
+            android:background="@drawable/border_imageview"/> -->
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/post_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:placeholderImage="@drawable/placeholder"
+            app:failureImage="@drawable/error_image"
+            app:retryImage="@drawable/error_image"
+            app:roundBottomLeft="true"
+            app:roundBottomRight="true"
+            app:roundTopLeft="true"
+            app:roundTopRight="true"
+            app:roundedCornerRadius="5dp"
+            app:roundingBorderWidth="2dp"
+            app:roundingBorderColor="@color/appBackground"
+            app:fadeDuration="1000"
+            app:actualImageScaleType="fitCenter"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="@color/light_transparent"/>
+            android:background="@color/appBackground"/>
 
         <TextView
             android:id="@+id/text_title"
@@ -35,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="@color/light_transparent"/>
+            android:background="@color/appBackground"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -48,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="@color/light_transparent"/>
+            android:background="@color/appBackground"/>
 
         <TextView
             android:layout_width="match_parent"

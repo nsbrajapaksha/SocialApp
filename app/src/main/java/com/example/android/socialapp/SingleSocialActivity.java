@@ -1,6 +1,7 @@
 package com.example.android.socialapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +25,8 @@ public class SingleSocialActivity extends AppCompatActivity {
 
     private String post_key = null;
     private DatabaseReference mDatabaseReference;
-    private ImageView singlePostImage;
+    //private ImageView singlePostImage;
+    private SimpleDraweeView mSimpleDraweeView;
     private TextView singlePostTitle;
     private TextView singlePostDesc;
     private Button deleteButton;
@@ -32,13 +36,15 @@ public class SingleSocialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_social);
+        Fresco.initialize(this);
 
         post_key = getIntent().getExtras().getString("PostId");
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("SocialApp");
 
         singlePostDesc = (TextView) findViewById(R.id.singleDesc);
         singlePostTitle = (TextView) findViewById(R.id.singleTitle);
-        singlePostImage = (ImageView) findViewById(R.id.singleImageView);
+        //singlePostImage = (ImageView) findViewById(R.id.singleImageView);
+        mSimpleDraweeView = (SimpleDraweeView) findViewById(R.id.singleImageView);
 
         mAuth = FirebaseAuth.getInstance();
         deleteButton = (Button) findViewById(R.id.singleDeleteButton);
@@ -54,7 +60,12 @@ public class SingleSocialActivity extends AppCompatActivity {
 
                 singlePostTitle.setText(post_title);
                 singlePostDesc.setText(post_desc);
-                Picasso.with(SingleSocialActivity.this).load(post_image).into(singlePostImage);
+                //Picasso.with(SingleSocialActivity.this).load(post_image).into(singlePostImage);
+                mSimpleDraweeView.setController(
+                        Fresco.newDraweeControllerBuilder()
+                                .setTapToRetryEnabled(true)
+                                .setUri(Uri.parse(post_image))
+                                .build());
 
                 if (mAuth.getCurrentUser().getUid().equals(post_uid)) {
                     deleteButton.setVisibility(View.VISIBLE);

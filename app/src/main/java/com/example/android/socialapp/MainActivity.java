@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -26,6 +27,8 @@ import android.widget.Toast;
 
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,6 +65,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Fresco.initialize(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -140,7 +144,7 @@ public class MainActivity extends AppCompatActivity{
         super.onStart();
         mSocialList.setAdapter(new ScaleInAnimationAdapter(alphaInAnimationAdapter));
         FBRA.startListening();
-        if (animate) {
+        if (animate && isNetworkAvailable(this)) {
             skeletonScreen = Skeleton.bind(mSocialList)
                     .duration(1000)
                     .adapter(FBRA)
@@ -150,9 +154,9 @@ public class MainActivity extends AppCompatActivity{
             myHandler.sendEmptyMessageDelayed(1, 3000);
             animate = false;
         }
-        /*if (!isNetworkAvailable(this)) {
-            Toast.makeText(this, "No internet access", Toast.LENGTH_LONG).show();
-        }*/
+        if (!isNetworkAvailable(this)) {
+            Snackbar.make(findViewById(R.id.relativeLayout), "No internet access", Snackbar.LENGTH_LONG).show();
+        }
 
         // Manually checking internet connection
         //checkConnection();
@@ -214,12 +218,18 @@ public class MainActivity extends AppCompatActivity{
         }
 
         public void setImage(Context context, String image) {
-            final ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
+            /*final ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
             Picasso.with(context).load(image)
-                    .resize(360, 200)
+                    .resize(270, 150)
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.error_image)
-                    .into(post_image);
+                    .into(post_image);*/
+            final SimpleDraweeView mSimpleDraweeView = (SimpleDraweeView) mView.findViewById(R.id.post_image);
+            mSimpleDraweeView.setController(
+                    Fresco.newDraweeControllerBuilder()
+                    .setTapToRetryEnabled(true)
+                    .setUri(Uri.parse(image))
+                    .build());
         }
 
         public void setUsername(String username) {
@@ -252,10 +262,10 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    /*public boolean isNetworkAvailable(final Context context) {
+    public boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
-    }*/
+    }
 
     /*@Override
     protected void onResume() {

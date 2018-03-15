@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.ethanhua:skeleton:1.1.0'
     implementation 'io.supercharge:shimmerlayout:2.0.0'
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
+    implementation 'com.facebook.fresco:fresco:0.7.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
