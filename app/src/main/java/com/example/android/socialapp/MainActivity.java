@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
-        mSocialList.setAdapter(new ScaleInAnimationAdapter(alphaInAnimationAdapter));
+        //mSocialList.setAdapter(new ScaleInAnimationAdapter(alphaInAnimationAdapter));
         FBRA.startListening();
         if (animate && isNetworkAvailable(this)) {
             skeletonScreen = Skeleton.bind(mSocialList)
@@ -156,6 +156,8 @@ public class MainActivity extends AppCompatActivity{
         }
         if (!isNetworkAvailable(this)) {
             Snackbar.make(findViewById(R.id.relativeLayout), "No internet access", Snackbar.LENGTH_LONG).show();
+        } else {
+            Snackbar.make(findViewById(R.id.relativeLayout), "Connected to internet", Snackbar.LENGTH_LONG).show();
         }
 
         // Manually checking internet connection
