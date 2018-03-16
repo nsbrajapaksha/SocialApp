@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +48,7 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 public class MainActivity extends AppCompatActivity{
 
-    private RecyclerView mSocialList;
+    private static RecyclerView mSocialList;
     private DatabaseReference mDatabaseReference;
     private FirebaseDatabase mDatabase;
 
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity{
 
     SkeletonScreen skeletonScreen;
     private boolean animate;
+    private boolean recyclerviewLoaded;
+    private static ProgressBar mprogressBar;
 
     AlphaInAnimationAdapter alphaInAnimationAdapter;
 
@@ -70,10 +73,12 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         animate = true;
+        recyclerviewLoaded = true;
 
         mSocialList = (RecyclerView) findViewById(R.id.social_list);
         mSocialList.setHasFixedSize(true);
         mSocialList.setLayoutManager(new LinearLayoutManager(this));
+        mprogressBar = (ProgressBar)findViewById(R.id.main_progressBar);
 
         SlideInLeftAnimator animator = new SlideInLeftAnimator();
         animator.setInterpolator(new OvershootInterpolator());
@@ -116,6 +121,12 @@ public class MainActivity extends AppCompatActivity{
 
                 final String post_key = getRef(position).getKey().toString();
 
+                if (recyclerviewLoaded && position == 0) {
+                    mprogressBar.setVisibility(View.INVISIBLE);
+                    mSocialList.setVisibility(View.VISIBLE);
+                    recyclerviewLoaded = false;
+                }
+
                 holder.setDesc(model.getDesc());
                 holder.setTitle(model.getTitle());
                 holder.setImage(getApplicationContext(), model.getImage());
@@ -142,15 +153,15 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
-        //mSocialList.setAdapter(new ScaleInAnimationAdapter(alphaInAnimationAdapter));
+        mSocialList.setAdapter(new ScaleInAnimationAdapter(alphaInAnimationAdapter));
         FBRA.startListening();
-        if (animate && isNetworkAvailable(this)) {
+        if (animate && isNetworkAvailable(MainActivity.this)) {
             skeletonScreen = Skeleton.bind(mSocialList)
                     .duration(1000)
                     .adapter(FBRA)
                     .load(R.layout.layout_skeleton)
                     .show();
-            MyHandler myHandler = new MyHandler(this);
+            MyHandler myHandler = new MyHandler(MainActivity.this);
             myHandler.sendEmptyMessageDelayed(1, 3000);
             animate = false;
         }
@@ -179,6 +190,8 @@ public class MainActivity extends AppCompatActivity{
             super.handleMessage(msg);
             if (activityWeakReference.get() != null) {
                 activityWeakReference.get().skeletonScreen.hide();
+                mprogressBar.setVisibility(View.VISIBLE);
+                mSocialList.setVisibility(View.INVISIBLE);
             }
         }
     }
