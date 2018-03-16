@@ -2,6 +2,7 @@ package com.example.android.socialapp;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -126,6 +127,9 @@ public class PostActivity extends AppCompatActivity {
         if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
             uri = data.getData();
             imageButton = (ImageButton) findViewById(R.id.imageButton);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                imageButton.setBackground(null);
+            }
             imageButton.setImageURI(uri);
         }
     }

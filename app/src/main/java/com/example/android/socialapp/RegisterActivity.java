@@ -50,6 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         String pass = passField.getText().toString().trim();
 
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass)) {
+            progressBar.setVisibility(View.VISIBLE);
             mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -61,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
                         current_user_db.child("image").setValue("default");
 
                         Intent mainIntent = new Intent(RegisterActivity.this, SetupActivity.class);
-                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         progressBar.setVisibility(View.INVISIBLE);
                         startActivity(mainIntent);
                     } else {

@@ -2,6 +2,7 @@ package com.example.android.socialapp;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -67,6 +68,9 @@ public class SetupActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 mImageUri = result.getUri();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    displayImage.setBackground(null);
+                }
                 displayImage.setImageURI(mImageUri);
             } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
@@ -89,7 +93,7 @@ public class SetupActivity extends AppCompatActivity {
                 }
             });
             Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
-            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(mainIntent);
 
         }
